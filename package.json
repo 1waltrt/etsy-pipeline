@@ -1,8 +1,8 @@
 {
-     "name": "etsy-pipeline",
-     "version": "1.0.0",
-     "scripts": {
-  "test": "echo \"Pruebas ejecutadas correctamente\" && exit 0",
-  "deploy": "echo \"Desplegando a producción...\""
-},
-   }
+  "name": "etsy-pipeline",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "echo \"Pruebas ejecutadas correctamente\" && exit 0",
+    "deploy": "echo \"Desplegando a producción...\""
+  }
+}

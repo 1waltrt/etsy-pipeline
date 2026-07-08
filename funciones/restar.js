@@ -1,15 +1,15 @@
-function sumarDosNumeros(a, b) {
-  return a + b;
+function restar(a, b) {
+  return a - b;
 }
 
 const meta = {
-  nombre: 'sumarDosNumeros',
-  descripcion: 'Suma dos números.',
+  nombre: 'restar',
+  descripcion: 'Resta dos números (a - b).',
   parametros: [
     { nombre: 'a', tipo: 'number' },
     { nombre: 'b', tipo: 'number' }
   ],
-  ejecutar: sumarDosNumeros
+  ejecutar: restar
 };
 
 if (typeof module !== 'undefined' && module.exports) {

@@ -40,7 +40,7 @@
     }
 
     async function cargarFunciones() {
-      const respuesta = await fetch('manifest.json');
+      const respuesta = await fetch('manifest.json?v=' + Date.now());
       const funciones = await respuesta.json();
 
       for (const meta of funciones) {

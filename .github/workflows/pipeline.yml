@@ -25,6 +25,8 @@ jobs:
     steps:
       - name: Descargar el código
         uses: actions/checkout@v4
+      - name: Generar catalogo de funciones
+        run: node scripts/generar-manifest.js
       - name: Preparar página web
         uses: actions/upload-pages-artifact@v3
         with:

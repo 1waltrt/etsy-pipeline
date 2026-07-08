@@ -7,17 +7,57 @@
     body { font-family: Arial, sans-serif; margin: 40px; background: #f4f4f4; }
     h1 { color: #2e2e2e; }
     .funcion { background: white; padding: 20px; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-    .estado { color: green; font-weight: bold; }
+    input { padding: 8px; font-size: 16px; margin-right: 10px; }
+    button { padding: 8px 16px; font-size: 16px; cursor: pointer; }
+    p[id^="resultado-"] { margin-top: 15px; font-size: 18px; font-weight: bold; }
   </style>
 </head>
 <body>
   <h1>🚀 Funciones desplegadas del proyecto</h1>
+  <img src="https://github.com/1waltrt/etsy-pipeline/actions/workflows/pipeline.yml/badge.svg" alt="Estado del Pipeline">
 
-  <div class="funcion">
-    <h2>esPositivo(numero)</h2>
-    <p>Verifica si un número es mayor que cero.</p>
-    <p class="estado">✅ Pruebas pasadas</p>
-  </div>
+  <div id="contenedor"></div>
 
+  <script>
+    function cargarScript(src) {
+      return new Promise((resolve) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = resolve;
+        document.head.appendChild(script);
+      });
+    }
+
+    async function cargarFunciones() {
+      const respuesta = await fetch('manifest.json');
+      const funciones = await respuesta.json();
+
+      for (const meta of funciones) {
+        await cargarScript('funciones/' + meta.archivo);
+      }
+
+      const contenedor = document.getElementById('contenedor');
+      funciones.forEach(meta => {
+        const div = document.createElement('div');
+        div.className = 'funcion';
+        div.innerHTML = `
+          <h2>${meta.nombre}(numero)</h2>
+          <p>${meta.descripcion}</p>
+          <input type="number" id="input-${meta.nombre}" placeholder="Escribe un número">
+          <button>Probar</button>
+          <p id="resultado-${meta.nombre}"></p>
+        `;
+        div.querySelector('button').onclick = () => {
+          const valor = Number(document.getElementById(`input-${meta.nombre}`).value);
+          const resultado = window[meta.nombre].ejecutar(valor);
+          document.getElementById(`resultado-${meta.nombre}`).innerText =
+            resultado ? `✅ Resultado: true` : `❌ Resultado: false`;
+        };
+        contenedor.appendChild(div);
+      });
+    }
+
+    cargarFunciones();
+  </script>
 </body>
 </html>

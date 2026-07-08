@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Etsy Pipeline - Funciones interactivas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .funcion {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .funcion input {
+      margin-right: 8px;
+    }
+    .funcion button {
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Funciones interactivas</h1>
+  <div id="contenedor"></div>
+
+  <script>
+    function cargarScript(src) {
+      return new Promise((resolve) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = resolve;
+        document.head.appendChild(script);
+      });
+    }
+
+    async function cargarFunciones() {
+      const respuesta = await fetch('manifest.json?v=' + Date.now());
+      const funciones = await respuesta.json();
+
+      for (const meta of funciones) {
+        await cargarScript('funciones/' + meta.archivo);
+      }
+
+      const contenedor = document.getElementById('contenedor');
+
+      funciones.forEach(meta => {
+        const funcionCargada = window[meta.nombre];
+        const parametros = funcionCargada.parametros || [];
+
+        const inputsHTML = parametros.map(p =>
+          `<input type="${p.tipo}" id="input-${meta.nombre}-${p.nombre}" placeholder="${p.nombre}">`
+        ).join(' ');
+
+        const div = document.createElement('div');
+        div.className = 'funcion';
+        div.innerHTML = `
+          <h2>${meta.nombre}</h2>
+          <p>${meta.descripcion}</p>
+          ${inputsHTML}
+          <button>Probar</button>
+          <p id="resultado-${meta.nombre}"></p>
+        `;
+
+        div.querySelector('button').onclick = () => {
+          const valores = parametros.map(p => {
+            const raw = document.getElementById(`input-${meta.nombre}-${p.nombre}`).value;
+            return p.tipo === 'number' ? Number(raw) : raw;
+          });
+          const resultado = funcionCargada.ejecutar(...valores);
+          document.getElementById(`resultado-${meta.nombre}`).innerText = `Resultado: ${resultado}`;
+        };
+
+        contenedor.appendChild(div);
+      });
+    }
+
+    cargarFunciones();
+  </script>
+</body>
+</html>

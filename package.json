@@ -1,0 +1,11 @@
+{
+  "name": "etsy-pipeline",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "jest",
+    "deploy": "echo \"Desplegando a producción...\""
+  },
+  "devDependencies": {
+    "jest": "^30.4.2"
+  }
+}

@@ -5,8 +5,11 @@ function sumarDosNumeros(a, b) {
 const meta = {
   nombre: 'sumarDosNumeros',
   descripcion: 'Suma dos números.',
-  ejecutar: sumarDosNumeros,
-  tipo: 'dosNumeros'
+  parametros: [
+    { nombre: 'a', tipo: 'number' },
+    { nombre: 'b', tipo: 'number' }
+  ],
+  ejecutar: sumarDosNumeros
 };
 
 if (typeof module !== 'undefined' && module.exports) {

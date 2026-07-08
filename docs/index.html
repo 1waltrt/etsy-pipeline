@@ -1,4 +1,35 @@
-<script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Etsy Pipeline - Funciones interactivas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .funcion {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .funcion input {
+      margin-right: 8px;
+    }
+    .funcion button {
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Funciones interactivas</h1>
+  <div id="contenedor"></div>
+
+  <script>
     function cargarScript(src) {
       return new Promise((resolve) => {
         const script = document.createElement('script');
@@ -51,3 +82,5 @@
 
     cargarFunciones();
   </script>
+</body>
+</html>

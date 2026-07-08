@@ -13,12 +13,22 @@ jobs:
         run: npm install
       - name: Ejecutar Tests Unitarios
         run: npm test
+
   deploy:
     name: 2. Despliegue Automático
     needs: test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     steps:
       - name: Descargar el código
         uses: actions/checkout@v4
-      - name: Subir a Producción
-        run: npm run deploy
+      - name: Preparar página web
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+      - name: Publicar en GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

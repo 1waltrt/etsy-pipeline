@@ -2,7 +2,7 @@ function restar(a, b) {
   return a - b;
 }
 
-const meta = {
+const metaRestar = {
   nombre: 'restar',
   descripcion: 'Resta dos números (a - b).',
   parametros: [
@@ -13,7 +13,7 @@ const meta = {
 };
 
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = meta;
+  module.exports = metaRestar;
 } else {
-  window[meta.nombre] = meta;
+  window[metaRestar.nombre] = metaRestar;
 }

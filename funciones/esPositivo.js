@@ -2,14 +2,15 @@ function esPositivo(numero) {
   return numero > 0;
 }
 
-const meta = {
+const metaEsPositivo = {
   nombre: 'esPositivo',
   descripcion: 'Verifica si un número es mayor que cero.',
+  parametros: [{ nombre: 'numero', tipo: 'number' }],
   ejecutar: esPositivo
 };
 
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = meta;
+  module.exports = metaEsPositivo;
 } else {
-  window[meta.nombre] = meta;
+  window[metaEsPositivo.nombre] = metaEsPositivo;
 }
